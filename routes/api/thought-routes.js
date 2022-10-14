@@ -24,6 +24,6 @@ router
     .post(createReaction);
 
 // /api/comments/<pizzaId>/<commentId>/<replyId>
-router.route('/:ThoughtId/:reactionId').delete(removeReaction);
+router.route('/:thoughtId/:reactionId').delete(removeReaction);
 
 module.exports = router;
