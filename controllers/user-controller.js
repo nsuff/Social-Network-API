@@ -4,6 +4,9 @@ const userController = {
     // get all thoughts
     getAllUser(req, res) {
         User.find({})
+            .populate({ path: 'thoughts', select: '-__v'})
+            .populate({ path: 'friends', select: '-__v'})
+            .select('-__v')
             .then(dbUserData => res.json(dbUserData))
             .catch(err => {
                 console.log(err);
@@ -33,7 +36,7 @@ const userController = {
         User.create(req.body)
         .then(({ _id }) => {
             return User.findOneAndUpdate(
-                { _id: req.body.userId },
+                { _id: req.params.userId },
                 { $push: { users: _id } },
                 { new: true }
             );
@@ -84,6 +87,8 @@ const userController = {
             { $push: { friends: req.params.friendId } },
             { runValidators: true, new: true }
         )
+        .populate({ path: 'friends', select: ('-__v') } )
+        .select('-__v')
         .then(dbUserData => {
             if (!dbUserData) {
                 res.status(404).json({ message: 'No user found with this id!' });
@@ -101,6 +106,8 @@ const userController = {
             { $pull: { friends: req.params.friendId } },
             { new: true }
         )
+        .populate({ path: 'friends', select: '-__v'})
+        .select('-__v')
         .then(dbUserData => {
             if (!dbUserData) {
                 res.status(404).json({ message: 'No user found with this id!' });

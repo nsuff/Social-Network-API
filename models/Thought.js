@@ -49,7 +49,7 @@ const ThoughtSchema = new Schema(
         required: true
       },
       // use ReplySchema to validate data for a reply
-      reaction: [ReactionSchema]
+      reactions: [ReactionSchema]
     },
     {
       toJSON: {
@@ -62,6 +62,7 @@ const ThoughtSchema = new Schema(
   
 ThoughtSchema.virtual('reactionCount').get(function() {
     return this.reactions.length;
+    //return 5;
 });
   
 const Thought = model('Thought', ThoughtSchema);

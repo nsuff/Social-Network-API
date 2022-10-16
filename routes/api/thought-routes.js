@@ -17,7 +17,7 @@ router
 
 // /api/thoughts/<thoughtId>
 router
-    .route('/:thoughtId')
+    .route('/:id')
     .get(getThoughtById)
     .put(updateThought)
     .delete(deleteThought)
